@@ -1,0 +1,19 @@
+{
+  "name": "wix-crm-backend",
+  "version": "1.0.0",
+  "description": "Wix data sync (contacts, orders, bookings, quotes, invoices) + daily deal reminder digest email",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.14",
+    "lowdb": "^7.0.1",
+    "node-fetch": "^3.3.2"
+  }
+}
