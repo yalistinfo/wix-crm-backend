@@ -14,14 +14,32 @@ app.use(express.json());
 
 await initDb();
 
+// TEMPORARY DEBUG ENDPOINT — remove before deploying anywhere public.
+// Shows whether .env actually loaded, without exposing the real secret.
+app.get("/api/debug-env", (req, res) => {
+  const key = process.env.WIX_API_KEY || "";
+  res.json({
+    WIX_API_KEY_length: key.length,
+    WIX_API_KEY_last6: key.slice(-6),
+    WIX_SITE_ID: process.env.WIX_SITE_ID || "(missing)",
+    WIX_ACCOUNT_ID: process.env.WIX_ACCOUNT_ID || "(missing)",
+  });
+});
+
 /* ---------- Whole-app data (used by the frontend) ---------- */
 app.get("/api/data", (req, res) => {
-  res.json({ contacts: db.data.contacts, records: db.data.records, deals: db.data.deals });
+  res.json({
+    contacts: db.data.contacts,
+    records: db.data.records,
+    deals: db.data.deals,
+    invoices: db.data.invoices,
+  });
 });
 app.put("/api/data", async (req, res) => {
   db.data.contacts = req.body.contacts || [];
   db.data.records = req.body.records || [];
   db.data.deals = req.body.deals || [];
+  db.data.invoices = req.body.invoices || [];
   await db.write();
   res.json({ ok: true });
 });
